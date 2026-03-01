@@ -1,3 +1,4 @@
+import DOMPurify from 'dompurify'
 import { useState } from 'react'
 import { useUIStore } from '@/stores/uiStore'
 import { Card } from '@/components/common/Card'
@@ -79,7 +80,7 @@ export function Review() {
             'Clear your daily queue to lock knowledge into **long-term memory**',
           ]).map((text, i) => (
             <p key={i} className="guide-step" dangerouslySetInnerHTML={{
-              __html: text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+              __html: DOMPurify.sanitize(text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'))
             }} />
           ))}
         </div>

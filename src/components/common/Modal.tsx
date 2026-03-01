@@ -21,12 +21,23 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/60" onClick={onClose} />
-      <div className="relative bg-surface-light border border-surface-border rounded-xl max-w-lg w-full max-h-[85vh] overflow-y-auto p-6">
+      <div className="absolute inset-0 bg-black/60" onClick={onClose} aria-hidden="true" />
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={title ? 'modal-title' : undefined}
+        className="relative bg-surface-light border border-surface-border rounded-xl max-w-lg w-full max-h-[85vh] overflow-y-auto p-6"
+      >
         {title && (
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-white">{title}</h3>
-            <button onClick={onClose} className="text-slate-400 hover:text-white text-xl">&times;</button>
+            <h3 id="modal-title" className="text-lg font-semibold text-white">{title}</h3>
+            <button
+              onClick={onClose}
+              aria-label="모달 닫기"
+              className="text-slate-400 hover:text-white text-xl"
+            >
+              &times;
+            </button>
           </div>
         )}
         {children}

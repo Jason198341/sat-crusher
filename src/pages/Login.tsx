@@ -33,15 +33,16 @@ export function Login() {
         <h1 className="text-2xl font-bold text-white text-center mb-6">{t.auth.login}</h1>
 
         {error && (
-          <div className="bg-danger-500/10 border border-danger-500/30 text-danger-400 text-sm rounded-lg px-3 py-2 mb-4">
+          <div role="alert" className="bg-danger-500/10 border border-danger-500/30 text-danger-400 text-sm rounded-lg px-3 py-2 mb-4">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm text-slate-400 mb-1">{t.auth.email}</label>
+            <label htmlFor="login-email" className="block text-sm text-slate-400 mb-1">{t.auth.email}</label>
             <input
+              id="login-email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -50,8 +51,9 @@ export function Login() {
             />
           </div>
           <div>
-            <label className="block text-sm text-slate-400 mb-1">{t.auth.password}</label>
+            <label htmlFor="login-password" className="block text-sm text-slate-400 mb-1">{t.auth.password}</label>
             <input
+              id="login-password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}

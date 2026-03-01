@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import katex from 'katex'
 import { marked } from 'marked'
+import DOMPurify from 'dompurify'
 
 interface MathRendererProps {
   content: string
@@ -18,11 +19,16 @@ marked.setOptions({
  * Pipeline: Markdown → HTML (via marked) → LaTeX rendering (via KaTeX)
  */
 export function MathRenderer({ content, className = '' }: MathRendererProps) {
-  const html = useMemo(() => renderContent(content), [content])
+  const html = useMemo(() => DOMPurify.sanitize(renderContent(content), {
+    // Allow KaTeX-generated SVG and MathML elements
+    ADD_TAGS: ['math', 'mrow', 'mi', 'mo', 'mn', 'msup', 'msub', 'mfrac', 'munder', 'mover', 'munderover', 'mspace', 'semantics', 'annotation'],
+    ADD_ATTR: ['xmlns', 'aria-hidden', 'focusable', 'viewBox', 'style', 'class', 'data-*'],
+  }), [content])
 
   return (
     <div
       className={className}
+      role="math"
       dangerouslySetInnerHTML={{ __html: html }}
     />
   )

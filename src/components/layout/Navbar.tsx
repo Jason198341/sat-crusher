@@ -47,6 +47,7 @@ export function Navbar() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => setLang(lang === 'en' ? 'ko' : 'en')}
+            aria-label={lang === 'en' ? '한국어로 전환' : 'Switch to English'}
             className="px-2 py-1 rounded text-xs font-medium bg-surface-lighter text-slate-300 hover:text-white transition-colors"
           >
             {lang === 'en' ? 'KR' : 'EN'}

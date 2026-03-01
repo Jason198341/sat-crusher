@@ -79,6 +79,8 @@ export function TutorChat() {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setShowModes(!showModes)}
+              aria-expanded={showModes}
+              aria-label={lang === 'ko' ? '튜터 모드 선택' : 'Select tutor mode'}
               className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-lighter hover:bg-surface-border text-sm transition-colors"
             >
               <span>{currentModeInfo?.icon}</span>
@@ -91,13 +93,19 @@ export function TutorChat() {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setShowDNA(!showDNA)}
+              aria-label={lang === 'ko' ? (showDNA ? 'DNA 패널 닫기' : 'DNA 패널 열기') : (showDNA ? 'Close DNA panel' : 'Open DNA panel')}
+              aria-pressed={showDNA}
               className={`text-xs px-2 py-1 rounded transition-colors ${
                 showDNA ? 'bg-brand-600/20 text-brand-400' : 'text-slate-500 hover:text-slate-300'
               }`}
             >
               🧬 DNA
             </button>
-            <button onClick={clearChat} className="text-xs text-slate-500 hover:text-slate-300">
+            <button
+              onClick={clearChat}
+              aria-label={lang === 'ko' ? '대화 초기화' : 'Clear chat'}
+              className="text-xs text-slate-500 hover:text-slate-300"
+            >
               {lang === 'ko' ? '대화 초기화' : 'Clear'}
             </button>
           </div>
@@ -111,7 +119,7 @@ export function TutorChat() {
         )}
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        <div className="flex-1 overflow-y-auto p-4 space-y-4" aria-live="polite" aria-relevant="additions" aria-label={lang === 'ko' ? '튜터 채팅 메시지' : 'Tutor chat messages'}>
           {visibleMessages.length === 0 && (
             <div className="text-center text-slate-500 mt-12">
               <div className="text-5xl mb-4">{currentModeInfo?.icon || '⚡'}</div>
@@ -168,7 +176,7 @@ export function TutorChat() {
           ))}
 
           {error && (
-            <div className="text-center text-danger-400 text-sm">{error}</div>
+            <div role="alert" className="text-center text-danger-400 text-sm">{error}</div>
           )}
 
           <div ref={bottomRef} />
@@ -189,15 +197,16 @@ export function TutorChat() {
               placeholder={lang === 'ko'
                 ? MODE_PLACEHOLDERS[mode]?.ko
                 : MODE_PLACEHOLDERS[mode]?.en}
+              aria-label={lang === 'ko' ? '메시지 입력' : 'Message input'}
               rows={2}
               className="flex-1 bg-surface-lighter border border-surface-border rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-500 resize-none"
             />
             {isStreaming ? (
-              <Button variant="danger" onClick={abort} className="self-end">
+              <Button variant="danger" onClick={abort} aria-label={lang === 'ko' ? '응답 중지' : 'Stop response'} className="self-end">
                 {lang === 'ko' ? '중지' : 'Stop'}
               </Button>
             ) : (
-              <Button onClick={handleSend} disabled={!input.trim()} className="self-end">
+              <Button onClick={handleSend} disabled={!input.trim()} aria-label={lang === 'ko' ? '메시지 보내기' : 'Send message'} className="self-end">
                 {mode === 'byeorak' ? '⚡' : '→'}
               </Button>
             )}

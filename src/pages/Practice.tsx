@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback } from 'react'
+import DOMPurify from 'dompurify'
 import { usePracticeStore } from '@/stores/practiceStore'
 import { useDashboardStore } from '@/stores/dashboardStore'
 import { useUIStore } from '@/stores/uiStore'
@@ -200,7 +201,7 @@ export function Practice() {
             'Wrong answers show a ⚡**Lightning Explain** button for detailed AI tutoring',
           ]).map((text, i) => (
             <p key={i} className="guide-step" dangerouslySetInnerHTML={{
-              __html: text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+              __html: DOMPurify.sanitize(text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'))
             }} />
           ))}
         </div>
@@ -300,7 +301,7 @@ export function Practice() {
       )}
 
       {store.error && (
-        <div className="mt-4 bg-danger-500/10 border border-danger-500/30 text-danger-400 text-sm rounded-lg px-3 py-2">
+        <div role="alert" className="mt-4 bg-danger-500/10 border border-danger-500/30 text-danger-400 text-sm rounded-lg px-3 py-2">
           {store.error}
         </div>
       )}

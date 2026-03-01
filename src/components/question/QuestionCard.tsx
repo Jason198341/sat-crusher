@@ -96,11 +96,15 @@ export function QuestionCard({
         </span>
         <button
           onClick={onFlag}
+          aria-label={flagged
+            ? (lang === 'ko' ? '문제 표시 해제' : 'Remove flag from question')
+            : (lang === 'ko' ? '문제 표시하기' : 'Flag question for review')}
+          aria-pressed={flagged}
           className={`text-sm px-3 py-1 rounded-lg transition-colors ${
             flagged ? 'bg-warning-500/20 text-warning-400' : 'bg-surface-lighter text-slate-400 hover:text-white'
           }`}
         >
-          {flagged ? '★' : '☆'} {t.test.flag}
+          <span aria-hidden="true">{flagged ? '★' : '☆'}</span> {t.test.flag}
         </button>
       </div>
 
@@ -132,11 +136,23 @@ export function QuestionCard({
               choiceClass = 'border-brand-500 bg-brand-600/10'
             }
 
+            const choiceState = isSubmitted
+              ? isCorrect
+                ? (lang === 'ko' ? ' (정답)' : ' (Correct)')
+                : isSelected
+                  ? (lang === 'ko' ? ' (오답 선택)' : ' (Incorrect, selected)')
+                  : ''
+              : isSelected
+                ? (lang === 'ko' ? ' (선택됨)' : ' (Selected)')
+                : ''
+
             return (
               <button
                 key={i}
                 onClick={() => !isSubmitted && onSelect(i)}
                 disabled={isSubmitted}
+                aria-label={`${choice.label}: ${choice.text}${choiceState}`}
+                aria-pressed={!isSubmitted ? isSelected : undefined}
                 className={`w-full text-left p-4 rounded-lg border-2 transition-all ${choiceClass}`}
               >
                 <div className="flex items-start gap-3">

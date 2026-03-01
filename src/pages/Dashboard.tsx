@@ -1,3 +1,4 @@
+import DOMPurify from 'dompurify'
 import { Link } from 'react-router-dom'
 import { useAuthStore } from '@/stores/authStore'
 import { useDashboardStore } from '@/stores/dashboardStore'
@@ -101,7 +102,7 @@ export function Dashboard() {
             'The more you practice, the more accurate your analytics become',
           ]).map((text, i) => (
             <p key={i} className="guide-step" dangerouslySetInnerHTML={{
-              __html: text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+              __html: DOMPurify.sanitize(text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'))
             }} />
           ))}
         </div>

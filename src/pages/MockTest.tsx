@@ -1,3 +1,4 @@
+import DOMPurify from 'dompurify'
 import { useTestStore } from '@/stores/testStore'
 import { useDashboardStore } from '@/stores/dashboardStore'
 import { useUIStore } from '@/stores/uiStore'
@@ -83,14 +84,14 @@ export function MockTest() {
                 'Total time: about **2h 14min** (R&W 64min + Math 70min)',
               ]).map((text, i) => (
                 <p key={i} className="guide-step" dangerouslySetInnerHTML={{
-                  __html: text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                  __html: DOMPurify.sanitize(text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'))
                 }} />
               ))}
             </div>
           </div>
 
           {store.error && (
-            <div className="bg-danger-500/10 border border-danger-500/30 text-danger-400 text-sm rounded-lg px-3 py-2">
+            <div role="alert" className="bg-danger-500/10 border border-danger-500/30 text-danger-400 text-sm rounded-lg px-3 py-2">
               {store.error}
             </div>
           )}
@@ -187,6 +188,7 @@ export function MockTest() {
 
           {showConfirm && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+              <div role="dialog" aria-modal="true" aria-label={lang === 'ko' ? '모듈 제출 확인' : 'Confirm module submission'}>
               <Card className="max-w-sm text-center space-y-4">
                 <p className="text-white">{t.test.confirmSubmit}</p>
                 <div className="flex gap-3 justify-center">
@@ -196,6 +198,7 @@ export function MockTest() {
                   </Button>
                 </div>
               </Card>
+              </div>
             </div>
           )}
         </div>

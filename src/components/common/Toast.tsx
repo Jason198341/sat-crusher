@@ -13,10 +13,19 @@ export function Toast() {
   return (
     <div className="fixed bottom-4 right-4 z-50 animate-[slideUp_0.3s_ease-out]">
       <div
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
         className={`${colors[toast.type]} text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-3 max-w-sm`}
       >
         <span className="text-sm">{toast.message}</span>
-        <button onClick={clearToast} className="text-white/70 hover:text-white text-lg leading-none">&times;</button>
+        <button
+          onClick={clearToast}
+          aria-label="알림 닫기"
+          className="text-white/70 hover:text-white text-lg leading-none"
+        >
+          &times;
+        </button>
       </div>
     </div>
   )

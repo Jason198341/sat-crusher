@@ -34,15 +34,16 @@ export function Signup() {
         <h1 className="text-2xl font-bold text-white text-center mb-6">{t.auth.signup}</h1>
 
         {error && (
-          <div className="bg-danger-500/10 border border-danger-500/30 text-danger-400 text-sm rounded-lg px-3 py-2 mb-4">
+          <div role="alert" className="bg-danger-500/10 border border-danger-500/30 text-danger-400 text-sm rounded-lg px-3 py-2 mb-4">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm text-slate-400 mb-1">{t.auth.name}</label>
+            <label htmlFor="signup-name" className="block text-sm text-slate-400 mb-1">{t.auth.name}</label>
             <input
+              id="signup-name"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -51,8 +52,9 @@ export function Signup() {
             />
           </div>
           <div>
-            <label className="block text-sm text-slate-400 mb-1">{t.auth.email}</label>
+            <label htmlFor="signup-email" className="block text-sm text-slate-400 mb-1">{t.auth.email}</label>
             <input
+              id="signup-email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -61,8 +63,9 @@ export function Signup() {
             />
           </div>
           <div>
-            <label className="block text-sm text-slate-400 mb-1">{t.auth.password}</label>
+            <label htmlFor="signup-password" className="block text-sm text-slate-400 mb-1">{t.auth.password}</label>
             <input
+              id="signup-password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
